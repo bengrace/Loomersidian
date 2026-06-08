@@ -1,0 +1,32 @@
+0:00
+Hey everyone, welcome to this quick design review.
+
+0:08
+So I want to walk through the dashboard changes we discussed last week.
+
+0:15
+Starting with the sidebar here, you can see it feels pretty heavy.
+
+0:23
+I think we need to reduce the number of items visible by default.
+
+0:35
+Moving on to the header, the hierarchy is unclear here.
+
+0:45
+Users might not know where to click for the main navigation.
+
+0:55
+I think we need a clear visual distinction between primary and secondary actions.
+
+1:05
+Let me show you what I mean by that.
+
+1:15
+See how the buttons here all look the same? That's confusing.
+
+1:25
+We should consider icon treatment and color differentiation.
+
+1:35
+Alright, that wraps up my feedback for now.

@@ -1,0 +1,103 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "loomersidian"
+version = "0.2.0"
+description = "Convert Loom videos to LLM-ready Obsidian Markdown timelines"
+readme = "README.md"
+license = "MIT"
+requires-python = ">=3.9"
+authors = [
+    { name = "Ben Grace" }
+]
+keywords = ["loom", "obsidian", "markdown", "video", "transcript", "llm"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Environment :: Console",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: MacOS",
+    "Operating System :: POSIX :: Linux",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Multimedia :: Video",
+    "Topic :: Text Processing :: Markup :: Markdown",
+]
+dependencies = [
+    "ffmpeg-python>=0.2.0",
+    "imagehash>=4.3.1",
+    "Pillow>=10.0.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.0.0",
+    "pytest-cov>=4.1.0",
+    "ruff>=0.6.0",
+]
+
+[project.scripts]
+loomersidian = "loomersidian.cli:main"
+
+[project.urls]
+Homepage = "https://github.com/bengrace/loomersidian"
+Repository = "https://github.com/bengrace/loomersidian"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+python_functions = ["test_*"]
+addopts = "-v --tb=short"
+
+[tool.coverage.run]
+source = ["loomersidian"]
+branch = true
+
+[tool.coverage.report]
+exclude_lines = [
+    "pragma: no cover",
+    "if __name__ == .__main__.:",
+    "raise NotImplementedError",
+]
+
+[tool.hatch.build.targets.wheel]
+packages = ["loomersidian"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py39"
+extend-exclude = [".venv", "build", "dist", "inbox", "output", "working"]
+
+[tool.ruff.lint]
+# Conservative, high-signal rule set:
+#   E, W   — pycodestyle errors/warnings
+#   F      — pyflakes (real bugs: unused imports/vars, undefined names)
+#   I      — isort (import ordering)
+#   UP     — pyupgrade (modernise syntax for the target version)
+#   B      — flake8-bugbear (likely-bug patterns)
+#   C4     — flake8-comprehensions
+select = ["E", "W", "F", "I", "UP", "B", "C4"]
+ignore = [
+    "E501",  # line too long — formatter handles long lines, lint shouldn't nit-pick
+    # PEP 585 / PEP 604 modernisations (use `list[int]` / `int | None`) are
+    # only safe on 3.9+ when `from __future__ import annotations` is present
+    # everywhere. We target ">=3.9" but use the typing module forms; switching
+    # would be a sweeping refactor with no functional benefit. Re-enable when
+    # we drop 3.9 support.
+    "UP006",  # use `list` instead of `List`
+    "UP007",  # use `X | Y` for unions
+    "UP035",  # `typing.List` is deprecated, use `list`
+    "UP045",  # use `X | None` for optional
+]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/*" = [
+    "B011",  # `assert False` is fine in tests
+    "E402",  # `pytest.importorskip` legitimately precedes imports
+]
+"loomersidian/dedupe.py" = [
+    "E402",  # local imports under TYPE_CHECKING / lazy-import blocks
+]
