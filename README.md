@@ -1,6 +1,6 @@
 # Loomersidian
 
-> Turn a Loom recording into an LLM-ready Obsidian Markdown timeline — one frame per unique screen, every spoken word preserved.
+> Turn a Loom recording into an LLM-ready Obsidian Markdown timeline with screenshots — one frame per unique screen, every spoken word preserved.
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![Python: 3.9+](https://img.shields.io/badge/python-3.9%2B-blue.svg)](#requirements)
